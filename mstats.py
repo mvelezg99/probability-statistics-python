@@ -15,7 +15,7 @@ def graficar_discreta(distribucion, title):
     plt.xlabel("Valores")
     plt.show()
     
-def graficar_discreta_cdf(distribucion, title, a, b):
+def graficar_discreta_cdf(distribucion, a, b):
     """
     Función para graficar la sumatoria de la distribución discreta recibida como parámetro
     """
@@ -25,7 +25,7 @@ def graficar_discreta_cdf(distribucion, title, a, b):
     fmp = distribucion.pmf(valores_x)
     plt.plot(valores_x, fmp)
     plt.vlines(x2, 0, fmp2, colors='b', lw=5, alpha=0.5)
-    plt.title(title)
+    plt.title("Probabilidad encontrada")
     plt.ylabel("Probabilidad")
     plt.xlabel("Valores")
     plt.show()
@@ -45,7 +45,7 @@ def graficar_continua(distribucion, title):
     plt.show()
     
 
-def graficar_continua_cdf(distribucion, title, a, b):
+def graficar_continua_cdf(distribucion, a, b):
     """
     Función para graficar la integral de la distribución continua recibida como parámetro
     """
@@ -55,7 +55,7 @@ def graficar_continua_cdf(distribucion, title, a, b):
     fp = distribucion.pdf(valores_x)
     plt.plot(valores_x, fp)
     plt.vlines(x2, 0, fp2, colors='b', lw=5, alpha=0.5)
-    plt.title(title)
+    plt.title("Probabilidad encontrada")
     plt.ylabel("Probabilidad")
     plt.xlabel("Valores")
     plt.show()
@@ -78,6 +78,14 @@ def convert_z_norm(z, mu, rho):
     distribución normal estándar
     """
     z_converted = ((z - mu) / rho )
+    return z_converted
+
+def convert_z_muestral(z, mu, rho, n):
+    """
+    Función para convertir una Z en una distribución normal cualquiera al valor correspondiente en la
+    distribución normal estándar, para distribuciones muestrales
+    """
+    z_converted = ((z - mu) / (rho / n**0.5))
     return z_converted
 
 
