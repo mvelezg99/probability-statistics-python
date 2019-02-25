@@ -3,6 +3,83 @@ import scipy.stats as ss
 import matplotlib.pyplot as plt
 
 #------------------------------------------------------------------------------------------------#
+#------------------------------------------ Generals --------------------------------------------#
+#------------------------------------------------------------------------------------------------#
+
+def get_z(x, mu, sd, **kwargs):
+    """
+    Function to get the Z value (standard deviations number under or over the average)
+    correspondent of the x value (parameter) in the standard normal distribution.
+    
+    Parameters:
+    --------------------------
+    x : double, float
+        Specific value from the random variable.
+    
+    mu : double, float
+        Population average given.
+        
+    sd : double, float
+        Population or sample standard deviation given.
+        
+    n : int, optional
+        Sample size, if you are working with sample distributions. (default=None)
+        
+    Returns:
+    --------------------------
+    z : float, double
+        The Z value (standard deviations number under or over the average)
+        correspondent of the x value (parameter) in the standard normal distribution.
+    """
+    if not kwargs:
+        z = ((x - mu) / sd)
+        return z
+    else:
+        n = kwargs.get('n', None)
+        if (n <= 30):
+            print("The sample size must be greater than 30.")
+        else:
+            z = ((x - mu) / (sd / n**0.5))
+            return z
+
+
+def get_t(x, mu, s, n):
+    """
+    Function to get the T value correspondent of the X value in the t-student
+    distribution.
+    
+    Parameters:
+    --------------------------
+    x : double, float
+        Specific value from the random variable.
+    
+    mu : double, float
+        Population average given.
+        
+    sd : double, float
+        Sample standard deviation given.
+        
+    n : int, optional
+        Sample size, less than 30.
+        
+    Returns:
+    --------------------------
+    t : float, double
+        The T value correspondent of the X value in the t-student.
+    """
+    if n > 30:
+        print("The sample size must be less than 30.")
+    else:
+        t = (x - mu) / (s / (n**0.5))
+        return t
+
+#------------------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------------------#
+
+
+
+#------------------------------------------------------------------------------------------------#
 #---------------------------------- Probability Distributions -----------------------------------#
 #------------------------------------------------------------------------------------------------#
 
@@ -79,25 +156,6 @@ def cdf_exponential(mu, x): #mu = mu
         cdf = 1 - np.exp(-mu * x)
     return cdf
 
-
-
-def get_z_norm(z, mu, rho):
-    """
-    Función para obtener una Z en una distribución normal cualquiera al valor correspondiente en la
-    distribución normal estándar
-    """
-    z_converted = ((z - mu) / rho )
-    return z_converted
-
-
-
-def get_z_muestral(z, mu, rho, n):
-    """
-    Función para convertir una Z en una distribución normal cualquiera al valor correspondiente en la
-    distribución normal estándar, para distribuciones muestrales
-    """
-    z_converted = ((z - mu) / (rho / n**0.5))
-    return z_converted
 
 #------------------------------------------------------------------------------------------------#
 #------------------------------------------------------------------------------------------------#
@@ -290,4 +348,152 @@ def n_prop(alpha, p, error):
 #------------------------------------------------------------------------------------------------#
 
 
+#------------------------------------------------------------------------------------------------#
+#------------------------------------- Hypothesis Testing ---------------------------------------#
+#------------------------------------------------------------------------------------------------#
 
+def crit_val_norm(sign, tail):
+    """
+    Function to calculate, with the standard normal distribution, the critical 
+    values according to the level of significance and the tail-type test.
+    
+    Parameters:
+    --------------------------
+    sign : float, double
+        Level of significance of the test.
+        Each value should be in the range [0, 1].
+        
+    tail : string
+        Tail-type test, it could be 'left', 'right' or 'two'.
+        
+    Returns:
+    --------------------------
+    crit_val : tuple, float
+        The critical values or value, according to the level of significance and
+        the tail-type test.
+    """
+    if tail == 'two':
+        alpha = 1 - (sign/2)
+        crit_val = ss.norm.ppf(1 - alpha), ss.norm.ppf(alpha)
+        return crit_val
+    
+    if tail == 'left':
+        alpha = 1 - sign
+        crit_val = ss.norm.ppf(1 - alpha)
+        return crit_val
+    
+    if tail == 'right':
+        alpha = 1 - sign
+        crit_val = ss.norm.ppf(alpha)
+        return crit_val
+    
+    print("You must input a valid tail ('two', 'left' or 'right')")
+    
+
+def crit_val_t(df, sign, tail):
+    """
+    Function to calculate, with the t-student distribution, the critical 
+    values according to the level of significance and the tail-type test.
+    
+    Parameters:
+    --------------------------
+    df : int
+        Degrees of freedom (n - 1). It's the sample size minus 1.
+        
+    sign : float, double
+        Level of significance of the test.
+        Each value should be in the range [0, 1].
+        
+    tail : string
+        Tail-type test, it could be 'left', 'right' or 'two'.
+        
+    Returns:
+    --------------------------
+    crit_val : tuple, float
+        The critical values or value, according to the level of significance and
+        the tail-type test.
+    """
+    if tail == 'two':
+        alpha = 1 - (sign/2)
+        crit_val = ss.t.ppf(1 - alpha, df), ss.t.ppf(alpha, df)
+        return crit_val
+    
+    if tail == 'left':
+        alpha = 1 - sign
+        crit_val = ss.t.ppf(1 - alpha, df)
+        return crit_val
+    
+    if tail == 'right':
+        alpha = 1 - sign
+        crit_val = ss.t.ppf(alpha, df)
+        return crit_val
+    
+    print("You must input a valid tail ('two', 'left' or 'right')")
+    
+    
+    
+def reject_h0(crit_val, value, tail):
+    """
+    Function to determine if reject the null hypothesis or not reject it based
+    on the tail-type test.
+    
+    Parameters:
+    --------------------------
+    crit_val : tuple, float
+        Critical values to consider.
+        
+    value : float, double
+        Value to compare with critical values.
+        
+    tail : string
+        Tail-type test, it could be 'left', 'right' or 'two'.
+        
+    Returns:
+    --------------------------
+    decision : boolean
+        True if we should reject null hypothesis,
+        False if we shouldn't reject null hypothesis.
+    """
+    if tail == 'two':
+        return (value < crit_val[0] or value > crit_val[1])
+    
+    if tail == 'left':
+        return value < crit_val
+    
+    if tail == 'right':
+        return value > crit_val
+    
+    print("You must input a valid tail ('two', 'left' or 'right')")
+    
+    
+def get_p(z, tail):
+    """
+    Function to determine the p-value (minimum significance level to reject
+    the null hypothesis).
+    
+    Parameters:
+    --------------------------
+    z : double, float
+        Z-value of the test statistic.
+        
+    tail : string
+        Tail-type test, it could be 'left', 'right' or 'two'.
+        
+    Returns:
+    --------------------------
+    p : double, float
+        P-value, the minimum significance level to reject the null hypothesis.
+    """
+    if tail == 'two':
+        z_area = ss.norm.cdf(z)
+        p = 2 * (1 - z_area)
+        return p
+    else :
+        z_area = ss.norm.cdf(z)
+        p = 1 - z_area
+        return p
+            
+    
+#------------------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------------------#
+#------------------------------------------------------------------------------------------------#
