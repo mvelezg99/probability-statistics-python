@@ -72,7 +72,36 @@ def get_t(x, mu, s, n):
     else:
         t = (x - mu) / (s / (n**0.5))
         return t
-
+    
+def get_z_prop(p, pi, n):
+    """
+    Function to get the Z value (standard deviations number under or over the average)
+    correspondent of the x value (parameter) in the standard normal distribution.
+    Applied in proportions.
+    
+    Parameters:
+    --------------------------
+    p : double, float
+        "Succeses" observations sample proportion.
+        Each value should be in the range [0, 1].
+    
+    pi : double, float
+        Population proportion given.
+        Each value should be in the range [0, 1].
+        
+    n : int
+        Sample size.
+        
+    Returns:
+    --------------------------
+    z : float, double
+        The Z value (standard deviations number under or over the average)
+        correspondent of the x value (parameter) in the standard normal distribution.
+    """
+    error = ((pi * (1 - pi)) / n)**0.5
+    z = (p - pi) / error
+    return z
+    
 #------------------------------------------------------------------------------------------------#
 #------------------------------------------------------------------------------------------------#
 #------------------------------------------------------------------------------------------------#
