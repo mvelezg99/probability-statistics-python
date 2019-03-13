@@ -459,6 +459,17 @@ def n_prop_2p(alpha, p1, p2, error):
     
     return round(n)
             
+def f_2p(n1, n2, var1, var2, alpha):
+    """
+    """
+    df1 = n1 - 1
+    df2 = n2 - 1
+    f_value = ss.f(df1, df2).interval(alpha)
+    
+    minimum = var1 / (f_value[1] * var2)
+    maximum = var1 / (f_value[0] * var2)
+    
+    return minimum, maximum
 
 #------------------------------------------------------------------------------------------------#
 #------------------------------------------------------------------------------------------------#
