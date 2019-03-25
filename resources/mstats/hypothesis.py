@@ -96,6 +96,13 @@ def crit_val_f(df1, df2, sign):
     alpha = 1 - sign
     crit_val = ss.f.ppf(alpha, df1, df2)
     return crit_val
+
+def crit_val_chi2(df, sign):
+    """
+    """
+    alpha = 1 - sign
+    crit_val = ss.chi2.ppf(alpha, df)
+    return crit_val
             
     
 def reject_h0(crit_val, value, tail):

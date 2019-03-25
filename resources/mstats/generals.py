@@ -9,6 +9,7 @@ Created on Mon Mar 11 10:36:13 2019
 #------------------------------------------ Generals --------------------------------------------#
 #------------------------------------------------------------------------------------------------#
 
+
 def get_z(x, mu, sd, **kwargs):
     """
     Function to get the Z value (standard deviations number under or over the average)

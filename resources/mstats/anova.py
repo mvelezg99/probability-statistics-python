@@ -133,8 +133,9 @@ def get_dms(*args, sign):
     cme = get_cme(*args)
     
     
+    
     for x in range(len(args)):
-        for xj in range(x+1, len(args)):
+        for xj in range(x + 1, len(args)):
             if(len(args[x]) == len(args[xj])):
                 fratio = ss.f.ppf((1 - sign), 1, (len(np.concatenate(args)) - len(args)))
                 dms = (((1 / len(args[x])) + (1 / len(args[xj]))) * cme * fratio)**0.5
