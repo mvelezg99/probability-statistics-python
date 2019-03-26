@@ -161,7 +161,7 @@ def hypothesis(distr, test, sign, tail):
             wspace=None, hspace=None)
     
     gray_patch = mpatches.Patch(color='gray', label='Reject zone')
-    khaki_patch = mpatches.Patch(color='khaki', label='No reject zone')
+    khaki_patch = mpatches.Patch(color='#F7F2C5', label='No reject zone')
   
     plt.legend(bbox_to_anchor=(1.01, 1), loc=2, borderaxespad=0.,
                handles=[gray_patch, khaki_patch])

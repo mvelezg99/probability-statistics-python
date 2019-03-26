@@ -5,6 +5,7 @@ Created on Sun Mar 24 11:28:58 2019
 @author: Miguel Ángel Vélez
 """
 
+import pandas as pd
 
 #------------------------------------------------------------------------------------------------#
 #-------------------------------- Categorical Data Analysis -------------------------------------#
@@ -38,6 +39,23 @@ def get_ei(oi, pi):
     ei = [(n * pi[x]) for x in range(len(oi))]
     
     return ei
+
+def get_pi(distr, intervals, oi):
+    """
+    """
+    pi = [(distr.cdf(x[1]) - distr.cdf(x[0])) for x in intervals]
+    return pi
+
+def contingency_ei(oi):
+    """
+    """
+    n = sum(sum(x) for x in oi)
+    ei = []
+    
+    
+            
+
+    
 
 #------------------------------------------------------------------------------------------------#
 #------------------------------------------------------------------------------------------------#
