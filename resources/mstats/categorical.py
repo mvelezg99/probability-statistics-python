@@ -5,8 +5,7 @@ Created on Sun Mar 24 11:28:58 2019
 @author: Miguel Ángel Vélez
 """
 
-import pandas as pd
-
+import numpy as np
 #------------------------------------------------------------------------------------------------#
 #-------------------------------- Categorical Data Analysis -------------------------------------#
 #------------------------------------------------------------------------------------------------#
@@ -51,10 +50,12 @@ def contingency_ei(oi):
     """
     n = sum(sum(x) for x in oi)
     rows = list(map(list, zip(*oi)))
-    tot_rows = [sum(x) for x in rows]
-    tot_cols = [sum(x) for x in oi]
+    tot_rows = np.array([sum(x) for x in rows])
+    tot_cols = np.array([sum(x) for x in oi])
     
-    pi_rows = [(tot_rows[x] / n) for x in range(len(tot_rows))]
+    pi_rows = np.array([(tot_rows[x] / n) for x in range(len(tot_rows))])
+    
+    
     
     
     
