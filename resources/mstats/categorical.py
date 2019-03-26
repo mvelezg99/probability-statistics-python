@@ -50,7 +50,12 @@ def contingency_ei(oi):
     """
     """
     n = sum(sum(x) for x in oi)
-    ei = []
+    rows = list(map(list, zip(*oi)))
+    tot_rows = [sum(x) for x in rows]
+    tot_cols = [sum(x) for x in oi]
+    
+    pi_rows = [(tot_rows[x] / n) for x in range(len(tot_rows))]
+    
     
     
             
