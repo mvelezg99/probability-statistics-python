@@ -27,9 +27,20 @@ def get_x2(oi, ei):
     x2 : double
         Chi squared value which represents the calculated statistical test.
     """
-    k = len(oi)
-    x2 = sum([((oi[x] - ei[x])**2 / ei[x]) for x in range(k)])
-    return x2
+    if (any(isinstance(el, list) for el in oi)): # Validate if the list is a list of lists
+        x2 = 0
+    
+        for i in range(len(oi)):
+            for j in range(len(oi[i])):
+                x2 += (oi[i][j] - ei[i][j])**2 / ei[i][j]
+            
+        return x2
+    else:
+        k = len(oi)
+        x2 = sum([((oi[x] - ei[x])**2 / ei[x]) for x in range(k)])
+        return x2
+        
+    
 
 def get_ei(oi, pi):
     """
@@ -55,8 +66,11 @@ def contingency_ei(oi):
     
     pi_rows = np.array([(tot_rows[x] / n) for x in range(len(tot_rows))])
     
+    ei = (tot_cols[..., None] * pi_rows[None, ...]).tolist()
+    # np.outer(tot_cols, pi_rows) -> It is the same numpy form to make the
+    # outer product of two vectors.
     
-    
+    return ei
     
     
             
