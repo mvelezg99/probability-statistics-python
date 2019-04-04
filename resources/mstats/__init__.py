@@ -9,4 +9,5 @@ from mstats import generals
 from mstats import hypothesis
 from mstats import intervals
 from mstats import categorical
+from mstats import linregr
 from mstats import graph

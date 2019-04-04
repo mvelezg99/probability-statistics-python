@@ -6,7 +6,7 @@ Created on Mon Mar 11 10:36:13 2019
 """
 
 import scipy.stats as ss
-from mstats import generals
+from mstats import generals, linregr
 
 #------------------------------------------------------------------------------------------------#
 #------------------------------------- Confidence Intervals -------------------------------------#
@@ -470,6 +470,18 @@ def f_2p(n1, n2, var1, var2, alpha):
     maximum = var1 / (f_value[0] * var2)
     
     return minimum, maximum
+
+def beta(x, y, alpha):
+    """
+    """
+    df = len(x) - 1
+    t_value = ss.t(df).interval(alpha)[1]
+    
+    minimum = linregr.slope(x, y) - (t_value * linregr.get_sb(x, y))
+    maximum = linregr.slope(x, y) + (t_value * linregr.get_sb(x, y))
+    
+    return minimum, maximum
+    
 
 #------------------------------------------------------------------------------------------------#
 #------------------------------------------------------------------------------------------------#

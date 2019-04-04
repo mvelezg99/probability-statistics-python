@@ -10,6 +10,8 @@ import scipy.stats as ss
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
+from mstats import linregr as lr
+
 #------------------------------------------------------------------------------------------------#
 #------------------------------------------ Graph -----------------------------------------------#
 #------------------------------------------------------------------------------------------------#
@@ -169,6 +171,18 @@ def hypothesis(distr, test, sign, tail):
     
     plt.show()
     
+    
+def linregr(x, y):
+    """
+    """
+    plt.scatter(x, y, color='seagreen')
+    fx = [(lr.regression(x, y))(i) for i in x]
+    plt.plot(x, fx, color='dimgray')
+    plt.title(r'$\hat Y = {} + {}x$'.format(round(lr.intercept(x, y), 2), round(lr.slope(x, y), 2)),
+              fontsize=17)
+
+    
+    plt.show()
 
 #------------------------------------------------------------------------------------------------#
 #------------------------------------------------------------------------------------------------#
