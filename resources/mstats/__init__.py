@@ -11,3 +11,4 @@ from mstats import intervals
 from mstats import categorical
 from mstats import linregr
 from mstats import graph
+from mstats import multiregr
