@@ -6,19 +6,17 @@ Created on Sat Apr 20 15:18:27 2019
 
 """
 
-import linregr
+from mstats import linregr
 import numpy as np
 
 #------------------------------------------------------------------------------------------------#
 #------------------------------------- Multiple Regression --------------------------------------#
 #------------------------------------------------------------------------------------------------#
 
-y1 = [15, 17, 13, 23, 16, 21, 14, 20, 24, 17, 16, 18, 23, 15, 16]
+#y1 = [15, 17, 13, 23, 16, 21, 14, 20, 24, 17, 16, 18, 23, 15, 16]
 
-x1 = [10, 12, 8, 17, 10, 15, 10, 14, 19, 10, 11, 13, 16, 10, 12]
-x2 = [2.4, 2.72, 2.08, 3.68, 2.56, 3.36, 2.24, 3.2, 3.84, 2.72, 2.07, 2.33, 2.98, 1.94, 2.17]
-
-print(linregr.regression(x1, y1).shape)
+#x1 = [10, 12, 8, 17, 10, 15, 10, 14, 19, 10, 11, 13, 16, 10, 12]
+#x2 = [2.4, 2.72, 2.08, 3.68, 2.56, 3.36, 2.24, 3.2, 3.84, 2.72, 2.07, 2.33, 2.98, 1.94, 2.17]
 
 def beta_hat(y, *args):
     """
@@ -151,31 +149,6 @@ def matrix_corr(y, *args):
     matrix = np.corrcoef(args, y)
     return matrix
 
-def get_sbs(y, *args):
-    """
-    """
-    se = get_se(y, *args) / (linregr.get_spc(args[0], args[1]))**0.5
-    print(se)
-    
-
-
-print(beta_hat(y1, x1, x2))
-
-print(regression(y1, x1, x2).shape)
-
-print(regression(y1, x1, x2)(1,1))
-
-print(get_se(y1, x1, x2))
-
-print(get_fratio(y1, x1, x2))
-
-#print(np.corrcoef([x1, x2], y1))
-
-print(matrix_corr(y1, x1, x2)[0][1])
-
-print(get_sbs(y1, x1, x2))
-
-    
 
 
 
