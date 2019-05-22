@@ -6,7 +6,6 @@ Created on Sat Apr 20 15:18:27 2019
 
 """
 
-from mstats import linregr
 import numpy as np
 
 #------------------------------------------------------------------------------------------------#
@@ -14,7 +13,7 @@ import numpy as np
 #------------------------------------------------------------------------------------------------#
 
 #y1 = [15, 17, 13, 23, 16, 21, 14, 20, 24, 17, 16, 18, 23, 15, 16]
-
+##
 #x1 = [10, 12, 8, 17, 10, 15, 10, 14, 19, 10, 11, 13, 16, 10, 12]
 #x2 = [2.4, 2.72, 2.08, 3.68, 2.56, 3.36, 2.24, 3.2, 3.84, 2.72, 2.07, 2.33, 2.98, 1.94, 2.17]
 
@@ -61,13 +60,19 @@ def y_hat(y, *args):
     
     for i in range(0, length_args):
         aux = []
+        #print("aux: ", aux)
         for j in range(0, length_parent):
+            #print("args: ", args[j][i])
             aux.append(args[j][i])
             
+        #print("*aux: ", *aux)
         y_hat.append(model(*aux))
+        #print("yhat: ", y_hat)
         
     return y_hat
     
+
+#print(y_hat(y1, x1, x2))
 
 def get_se(y, *args):
     """
@@ -79,6 +84,8 @@ def get_se(y, *args):
     
     se = (sum([(y[i] - y_hats[i])**2 for i in range(n)]) / (n - k - 1))**0.5
     return se
+
+#print(get_se(y1, x1, x2))
 
 def get_scr(y, *args):
     """
@@ -146,11 +153,47 @@ def get_fratio(y, *args):
 def matrix_corr(y, *args):
     """
     """
-    matrix = np.corrcoef(args, y)
+    matrix = np.corrcoef(y, args)
     return matrix
 
+def get_sr(rij, n):
+    """
+    """
+    sr = ((1 - (rij)**2) / (n - 2))**0.5
+    return sr
 
+def t_multicollinearity(rij, sr):
+    """
+    """
+    t = rij / sr
+    return t
 
+def t_regression(b, beta, sb):
+    """
+    """
+    t = (b - beta) / sb
+    return t
 
+def get_sbs(y, *x):
+    """
+    """
+    xs = list(x)
+    ones = [1] * len(y)
+    X = np.matrix([ones] + xs).transpose()
+    
+    X_matrix = np.linalg.inv(np.dot(X.transpose(), X))
+    
+    cme = get_cme(y, *x)
+    
+    C = cme * X_matrix
+    
+    sbs = [(C[i, i]**0.5) for i in range(len(x) + 1)]
+    
+    return sbs
+    
+#print(get_sbs(y1, x1, x2))
+
+#print(matrix_corr(y1, x1, x2))
+#print(get_sr(matrix_corr(y1, x1, x2)[1, 2], len(y1)))
 
 #------------------------------------------------------------------------------------------------#

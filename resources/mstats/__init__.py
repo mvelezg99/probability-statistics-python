@@ -1,5 +1,5 @@
 """
-mstats: A statistics and probability package for Python
+mstats: A statistics and probability library for Python
 =======================================================
 
 """
@@ -12,3 +12,4 @@ from mstats import categorical
 from mstats import linregr
 from mstats import graph
 from mstats import multiregr
+from mstats import timeseries

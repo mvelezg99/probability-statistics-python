@@ -6,7 +6,6 @@ Created on Sun Mar 24 11:59:54 2019
 """
 
 import numpy as np
-import scipy.stats as ss
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
@@ -181,6 +180,29 @@ def linregr(x, y):
     plt.title(r'$\hat Y = {} + {}x$'.format(round(lr.intercept(x, y), 2), round(lr.slope(x, y), 2)),
               fontsize=17)
 
+    
+    plt.show()
+    
+def trendline(y, t):
+    """
+    """
+    plt.scatter(t, y, color='lightblue')
+    ft = [(lr.regression(t, y))(i) for i in t]
+    plt.plot(t, ft, color='dimgray')
+    
+    plt.show()
+    
+
+def timeserie(y, t):
+    """
+    """
+    plt.scatter(t, y)
+    plt.plot(t, y)
+    
+    plt.ylabel("Y values")
+    plt.xlabel("Time values")
+    
+    plt.title("Time Serie Graph")
     
     plt.show()
 
